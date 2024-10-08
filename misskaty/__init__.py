@@ -86,7 +86,7 @@ jobstores = {
 scheduler = AsyncIOScheduler(jobstores=jobstores, timezone=TZ)
 
 async def run_wsgi():
-    config = uvicorn.Config(api, host="0.0.0.0", port=int(PORT))
+    config = uvicorn.Config(api, host="0.0.0.0", port=int("8080"))
     server = uvicorn.Server(config)
     await server.serve()
 
