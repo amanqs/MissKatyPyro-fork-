@@ -119,8 +119,9 @@ async def start_callback(self, ctx: CallbackQuery, strings):
             photo="https://img.yasirweb.eu.org/file/90e9a448bc2f8b055b762.jpg",
             caption=home_text_pm,
             reply_markup=home_keyboard_pm,
-            reply_to_message_id=ctx.message.message_id,
+            reply_to_message_id=ctx.message.id,  # Use ctx.message.id
         )
+
 
 
 @app.on_message(filters.command("start", COMMAND_HANDLER))
