@@ -604,7 +604,7 @@ async def cmd_eval(self: Client, ctx: Message, strings) -> Optional[str]:
     # Strip only ONE final newline to compensate for our message formatting
     if out.endswith("\n"):
         out = out[:-1]
-    final_output = f"{prefix}<b>INPUT:</b>\n<pre language='python'>{html.escape(code)}</pre>\n<b>OUTPUT:</b>\n<pre language='python'>{html.escape(out)}</pre>\nExecuted Time: {el_str}"
+    final_output = f"{prefix}<pre language='python'>{html.escape(out)}</pre>\nExecuted Time: {el_str}"
     if len(final_output) > 4096:
         with io.BytesIO(str.encode(out)) as out_file:
             out_file.name = "MissKatyEval.txt"
