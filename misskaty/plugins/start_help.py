@@ -41,7 +41,7 @@ home_keyboard_pm = InlineKeyboardMarkup(
     ]
 )
 
-home_text_pm = f"Hey there! My name is {BOT_NAME}. I have many useful features for you, feel free to add me to your group.\n\nIf you want give coffee to my owner you can send /donate command for more info."
+home_text_pm = f"Hey there! My name is {BOT_NAME}. I have many useful features for you, feel free to add me to your group."
 
 keyboard = InlineKeyboardMarkup(
     [
@@ -213,8 +213,6 @@ I'm a bot with some useful features. You can change language bot using /setlang 
 You can choose an option below, by clicking a button.
 
 Send command /privacy if you want know data collected by this bot.
-
-If you want give coffee to my owner you can send /donate command for more info.
 """.format(
             first_name=name,
             bot_name="MissKaty",
