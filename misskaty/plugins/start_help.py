@@ -121,6 +121,7 @@ async def start_callback(self, ctx: CallbackQuery, strings):
             reply_markup=home_keyboard_pm,
             reply_to_message_id=ctx.message.id,  # Use ctx.message.id
         )
+        await ctx.message.delete_msg()
 
 
 
