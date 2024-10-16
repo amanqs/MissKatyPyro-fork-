@@ -199,7 +199,7 @@ async def payment(client: Client, message: Message):
         'unique_code': unique_id,
         'service': service_id,
         'amount': amount,
-        'note': f'MissKaty Support by YS Dev',
+        'note': f'MissLicya',
         'valid_time': valid_time,
         'type_fee': '1',
         'payment_guide': True,
@@ -223,6 +223,7 @@ async def payment(client: Client, message: Message):
         msg = await message.reply_photo(qr_photo, caption=capt+payment_guide, reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(text="Payment Web", web_app=WebAppInfo(url=res["data"]["checkout_url_v2"]))]]), quote=True)
     await autopay_update(msg.id, res["data"]["note"], id_, res['data']['amount'], res['data']['status'], res['data']['unique_code'], res['data']['created_at'])
 
+"""
 @app.on_message(filters.command(["donate"], COMMAND_HANDLER))
 async def donate(self: Client, ctx: Message):
     try:
@@ -241,7 +242,7 @@ async def donate(self: Client, ctx: Message):
             f"❗️ <b>WARNING</b>\nI'm leaving from {ctx.chat.id} since i didn't have sufficient admin permissions.",
         )
         await ctx.chat.leave()
-
+"""
 
 @app.on_message(
     filters.command(["balas"], COMMAND_HANDLER) & (filters.user(SUDO) | filters.user(OWNER_ID)) & filters.reply
