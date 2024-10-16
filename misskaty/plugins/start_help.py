@@ -25,6 +25,7 @@ home_keyboard_pm = InlineKeyboardMarkup(
     [
         [
             InlineKeyboardButton(text="Commands ❓", callback_data="bot_commands"),
+            InlineKeyboardButton(text="Music Commands ❓", callback_data="settingsback_helper"),
         ],
         [
             InlineKeyboardButton(
