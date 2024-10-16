@@ -60,7 +60,7 @@ app = Client(
     api_id=API_ID,
     api_hash=API_HASH,
     bot_token=BOT_TOKEN,
-    mongodb=dict(connection=AsyncClient(DATABASE_URI), remove_peers=True),
+    #mongodb=dict(connection=AsyncClient(DATABASE_URI), remove_peers=True),
     sleep_threshold=180,
     app_version="MissKatyPyro Stable",
     workers=50,
