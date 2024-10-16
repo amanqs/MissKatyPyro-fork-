@@ -58,6 +58,24 @@ async def bot_sys_stats():
     mem = psutil.virtual_memory().percent
     disk = psutil.disk_usage("/").percent
     process = psutil.Process(os.getpid())
+    return f"""
+{UBOT_NAME}@{BOT_NAME}
+------------------
+UPTIME: {get_readable_time(bot_uptime)}
+BOT: {round(process.memory_info()[0] / 1024**2)} MB
+CPU: {cpu}%
+RAM: {mem}%
+DISK: {disk}%
+
+TOTAL PLUGINS: {len(ALL_MODULES)}
+"""
+
+async def info():
+    bot_uptime = int(time.time() - botStartTime)
+    cpu = psutil.cpu_percent(interval=0.5)
+    mem = psutil.virtual_memory().percent
+    disk = psutil.disk_usage("/").percent
+    process = psutil.Process(os.getpid())
     
     # Menghitung sisa RAM dengan asumsi total RAM adalah 64GB
     total_ram_gb = 64
@@ -78,8 +96,6 @@ DISK USAGE: {disk}%
 
 TOTAL PLUGINS: {len(ALL_MODULES)}
 """
-
-
 
 def remove_N(seq):
     i = 1
