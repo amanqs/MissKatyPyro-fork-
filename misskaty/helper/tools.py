@@ -58,17 +58,27 @@ async def bot_sys_stats():
     mem = psutil.virtual_memory().percent
     disk = psutil.disk_usage("/").percent
     process = psutil.Process(os.getpid())
+    
+    # Menghitung sisa RAM dengan asumsi total RAM adalah 64GB
+    total_ram_gb = 64
+    used_ram_mb = round(process.memory_info()[0] / 1024**2)
+    free_ram_mb = (total_ram_gb * 1024) - used_ram_mb
+
     return f"""
 {UBOT_NAME}@{BOT_NAME}
-------------------
+---------------------------
 UPTIME: {get_readable_time(bot_uptime)}
-BOT: {round(process.memory_info()[0] / 1024**2)} MB
+ISP: XtraBit by Linkbit Inovasi Teknologi
+TOTAL RAM: {total_ram_gb} GB
+USED RAM: {used_ram_mb} MB
+FREE RAM: {free_ram_mb} MB
 CPU: {cpu}%
-RAM: {mem}%
-DISK: {disk}%
+RAM USAGE: {mem}%
+DISK USAGE: {disk}%
 
 TOTAL PLUGINS: {len(ALL_MODULES)}
 """
+
 
 
 def remove_N(seq):

@@ -24,8 +24,8 @@ from misskaty.vars import COMMAND_HANDLER
 home_keyboard_pm = InlineKeyboardMarkup(
     [
         [
-            InlineKeyboardButton(text="Commands ❓", callback_data="bot_commands"),
-            InlineKeyboardButton(text="Music Commands ❓", callback_data="settings_back_helper"),
+            InlineKeyboardButton(text="Manage ❓", callback_data="bot_commands"),
+            InlineKeyboardButton(text="Music ❓", callback_data="settings_back_helper"),
         ],
         [
             InlineKeyboardButton(
