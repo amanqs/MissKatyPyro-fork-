@@ -73,6 +73,55 @@ FED_MARKUP = InlineKeyboardMarkup(
     ]
 )
 
+@app.on_callback_query(filters.regex("start_callback"))
+@use_chat_lang()
+async def start_callback(self, ctx: CallbackQuery, strings):
+    if ctx.message.chat.type.value != "private":
+        nama = ctx.from_user.mention if ctx.from_user else ctx.sender_chat.title
+        try:
+            return await ctx.message.reply_photo(
+                photo="https://img.yasirweb.eu.org/file/90e9a448bc2f8b055b762.jpg",
+                caption=strings("start_msg").format(kamuh=nama),
+                reply_markup=keyboard,
+            )
+        except (ChatSendPhotosForbidden, ChatWriteForbidden):
+            return await ctx.message.chat.leave()
+
+    if len(ctx.data.split()) > 1:
+        name = (ctx.data.split(None, 1)[1]).lower()
+        if "_" in name:
+            module = name.split("_", 1)[1]
+            text = (
+                strings("help_name").format(mod=HELPABLE[module].__MODULE__)
+                + HELPABLE[module].__HELP__
+            )
+            await ctx.message.reply_text(
+                text,
+                disable_web_page_preview=True,
+                reply_markup=InlineKeyboardMarkup(
+                    [[InlineKeyboardButton("back", callback_data="help_back")]]
+                ),
+            )
+            if module == "federation":
+                return await ctx.message.reply_text(
+                    text=text,
+                    reply_markup=FED_MARKUP,
+                    disable_web_page_preview=True,
+                )
+        elif name == "help":
+            text, keyb = await help_parser(ctx.from_user.first_name)
+            await ctx.message.reply_text(
+                text, reply_markup=keyb
+            )
+    else:
+        await self.send_photo(
+            ctx.message.chat.id,
+            photo="https://img.yasirweb.eu.org/file/90e9a448bc2f8b055b762.jpg",
+            caption=home_text_pm,
+            reply_markup=home_keyboard_pm,
+            reply_to_message_id=ctx.message.message_id,
+        )
+
 
 @app.on_message(filters.command("start", COMMAND_HANDLER))
 @use_chat_lang()
