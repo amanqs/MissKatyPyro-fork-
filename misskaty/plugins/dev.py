@@ -225,7 +225,7 @@ async def payment(client: Client, message: Message):
 
 
 
-@app.on_message(filters.command(["payment"], COMMAND_HANDLER))
+@app.on_message(filters.command(["alfa"], COMMAND_HANDLER))
 async def payment(client: Client, message: Message):
     api_url = 'https://api.paydisini.co.id/v1/'
     unique_id = f"VIP-{secrets.token_hex(5)}"
