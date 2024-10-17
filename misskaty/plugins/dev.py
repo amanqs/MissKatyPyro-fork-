@@ -225,7 +225,7 @@ async def payment(client: Client, message: Message):
 
 
 
-@app.on_message(filters.command(["alfa"], COMMAND_HANDLER))
+@app.on_message(filters.command(["payment"], COMMAND_HANDLER))
 async def payment(client: Client, message: Message):
     api_url = 'https://api.paydisini.co.id/v1/'
     unique_id = f"VIP-{secrets.token_hex(5)}"
@@ -249,27 +249,27 @@ async def payment(client: Client, message: Message):
     }
 
     if not PAYDISINI_KEY:
-        return await message.reply("Missing API Key, Please set PAYDISINI_KEY in env!")
+        return await message.reply_text("Missing API Key, Please set PAYDISINI_KEY in env!")
 
     rget = await fetch.post(api_url, data=params)
     if rget.status_code != 200:
-        return await message.reply("ERROR: Maybe your IP is not whitelisted or have another error from api.")
+        return await message.reply_text("ERROR: Maybe your IP is not whitelisted or have another error from api.")
 
     res = rget.json()
     if not res.get("success"):
-        return await message.reply(res["msg"])
+        return await message.reply_text(res["msg"])
 
-    # Remove QR code generation
+    # Prepare the message content
     checkout_url = res["data"]["checkout_url_v2"]
     capt = f"𝗠𝗲𝗻𝘂𝗻𝗴𝗴𝘂 𝗽𝗲𝗺𝗯𝗮𝘆𝗮𝗿𝗮𝗻\nKode: {res['data']['unique_code']}\nNote: {res['data']['note']}\nHarga: {res['data']['amount']}\nFee: {res['data']['fee']}\nExpired: {res['data']['expired']}\n\n"
     
     payment_guide = f"<b>{res['payment_guide'][0]['title']}:</b>\n" + "\n".join(f"{i + 1}. {step}" for i, step in enumerate(res["payment_guide"][0]['content']))
 
-    # Directly send the checkout button without QR code
+    # Send the message with buttons
     if message.chat.type.value != "private":
-        msg = await message.reply(caption=capt + payment_guide, reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(text="Payment Web", url=checkout_url)]]), quote=True)
+        await message.reply(caption=capt + payment_guide, reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(text="Payment Web", url=checkout_url)]]), quote=True)
     else:
-        msg = await message.reply(caption=capt + payment_guide, reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(text="Payment Web", web_app=WebAppInfo(url=checkout_url))]]), quote=True)
+        await message.reply(caption=capt + payment_guide, reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(text="Payment Web", web_app=WebAppInfo(url=checkout_url))]]), quote=True)
 
     await autopay_update(msg.id, res["data"]["note"], id_, res['data']['amount'], res['data']['status'], res['data']['unique_code'], res['data']['created_at'])
 
